@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {render, fireEvent} from '@testing-library/react';
 
+import { addTech } from '~/store/modules/techs/actions';
 import TechList from '~/components/TechList';
 
 jest.mock('react-redux');
@@ -13,8 +14,6 @@ describe('TechList component', () => {
     }));
 
     const {getByTestId, getByText, debug} = render(<TechList />);
-
-    debug();
 
     expect(getByTestId('tech-list')).toContainElement(getByText('Node.js'));
     expect(getByTestId('tech-list')).toContainElement(getByText('ReactJS'));
@@ -30,6 +29,6 @@ describe('TechList component', () => {
     fireEvent.change(getByLabelText('Tech'), {target: {value: 'Node.js'}});
     fireEvent.submit(getByTestId('tech-form'));
     
-    expect(dispatch).toHaveBeenCalledWith({type: 'ADD_TECH', payload: {tech: 'Node.js'}});
+    expect(dispatch).toHaveBeenCalledWith(addTech('Node.js'));
   })
 });
